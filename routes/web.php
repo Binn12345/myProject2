@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\loginController;
+use App\Http\Controllers\registerController;
 
 
 /*
@@ -17,6 +18,9 @@ use App\Http\Controllers\loginController;
 
 
 Route::get('/',  [loginController::class, 'loginPage'])->name('login.index');
+
+Route::get('/register',  [registerController::class, 'registration'])->name('register');
+
 
 Route::post('/check', [loginController::class, 'login'])->name('/check');
 
