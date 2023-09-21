@@ -37,7 +37,7 @@
                     </div>
                     <button type="button" class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-black hover:bg-gray-600 hover:duration-300 hover:text-white" id='login' data-url='{{route("/check")}}' data-dashboard='{{route("adminindex")}}'>Sign in</button>
                     <p class="text-sm font-light text-gray-500">
-                        Don’t have an account yet? <a href="{{}}" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
+                        Don’t have an account yet? <a href="{{ route('register')}}" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
                     </p>
                 </form>
             </div>
@@ -47,27 +47,9 @@
 
 
 <script type="text/javascript">
-
 $(document).ready(function(){
     $('#login').click(function(e){
-        //     const Toast = Swal.mixin({
-        //     toast: true,
-        //     position: 'top-end',
-        //     showConfirmButton: false,
-        //     timer: 4000,
-        //     background: '#59b259',
-        //     color: '#ffff',
-        //     timerProgressBar: true,
-        //     didOpen: (toast) => {
-        //         toast.addEventListener('mouseenter', Swal.resumeTimer)
-        //         toast.addEventListener('mouseleave', Swal.resumeTimer)
-        //     }
-        // })
-        // Toast.fire({
-        //     icon: 'success',
-        //     title: "djsidjosjdio"
-        // })
-
+        
         e.preventDefault();
         const emailValue = $("#email").val().trim();
         const passwordValue = $("#password").val().trim();
@@ -111,7 +93,7 @@ $(document).ready(function(){
         .catch(function (error) {
             Swal.fire({
                 icon: "error",
-                title: "Login Error",
+                title: "Access Denied",
                 text: error.response.data.error,
             });
         });

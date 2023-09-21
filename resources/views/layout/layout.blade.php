@@ -16,6 +16,10 @@
 
     @yield('publicindex')
     @yield('adminindex')
+    @yield('registerindex')
+    @yield('profileindex')
+    @yield('accountsindex')
+    
     
 </body>
 </html>

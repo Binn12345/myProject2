@@ -38,10 +38,10 @@ class loginController extends Controller
 
         $users = $user->where('email', $validated['email'])->first();
 
-        if (!$users) return response()->json(['error' => 'email is not reflected'],400);
+        if (!$users) return response()->json(['error' => 'Email does not exist.'],400);
 
         if (!Hash::check($validated['password'], $users->password)){
-            return response()->json(['error' => 'password does not match'],400);
+            return response()->json(['error' => 'Password does not exist.'],400);
         }
 
         $request->session()->put('adminEmail',$users->email);
@@ -50,6 +50,7 @@ class loginController extends Controller
 
     public function index(User $user)
     {
+        // dump(get_defined_vars(),$user);
         $adminEmail = HelperClass::sessionSuperadmin($user);
 
         if($adminEmail instanceof RedirectResponse){
