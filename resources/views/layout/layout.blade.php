@@ -25,26 +25,22 @@
     @yield('accountsindex')
     <script type="text/javascript">
       $(document).ready(function(){
-                $('#logout').on('click',function(e){
-          Swal.fire({
-            title: 'Are you sure?',
-            text: "You want to sign out",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes!'
-          }).then((result) => {
-            if (result.isConfirmed) {
-              window.location = "{{route('logout')}}"
-              // Swal.fire(
-              //   'Deleted!',
-              //   'Your file has been deleted.',
-              //   'success'
-              // )
-            }
+          $('#logout').on('click',function(e){
+            Swal.fire({
+              title: 'Are you sure?',
+              text: "You want to sign out",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes!'
+              
+            }).then((result) => {
+              if (result.isConfirmed) {
+                  window.location = "{{route('logout')}}"
+              }
+            })
           })
-        })
       });
       </script>
      

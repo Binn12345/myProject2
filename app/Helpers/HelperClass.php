@@ -3,19 +3,25 @@
 namespace App\Helpers;
 
 use App\Models\User;
+use App\Models\laravelUsers;
 
 class HelperClass
 {
     public static function sessionSuperadmin(User $user)
     {
+        
         if (!session()->has('adminEmail')){
             return to_route('login.index');
         }
         
+        // dump(session('adminEmail'));
+        
         $adminEmail = [ 
-            'adminEmail' => $user->where('email', session('adminEmail'))->first()
+            'adminEmail' => $user->select('id')->where('email', session('adminEmail'))->first()
         ];
-
+      
+        
+    
         if(!$adminEmail || !isset($adminEmail['adminEmail'])){
             session()->forget('adminEmail');
             
@@ -24,4 +30,11 @@ class HelperClass
         
         return $adminEmail;
     }   
+
+    public static function sessionjoin($id)
+    {
+        foreach ( $id as $item):
+
+        endforeach;
+    }
 }

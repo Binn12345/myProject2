@@ -8,6 +8,7 @@ use App\Http\Controllers\loginValidator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\laravelUsers;
 use Illuminate\Http\RedirectResponse;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\Validator;
@@ -49,8 +50,8 @@ class ContentController extends Controller
     }
     
     public function storedata(Request $request, User $user){
-        // func thru folder
-        
+
+        // dd($request->all());
 
         $validator = Validator::make($request->all(), [
             'emailV2' => 'required|email|ends_with:@gmail.com,@yahoo.com',
@@ -68,11 +69,23 @@ class ContentController extends Controller
             return response()->json(['error' => 'dshauidhasuhdi']);
         }
 
+
         $user->create([
             'email' => $requests['emailV2'],
             'password' => bcrypt($requests['passwordV2']),
             'name' => $faker->name
         ]);
+
+        $sub_param = $user->where('email',$request->emailV2)->first();
+        // dump($sub_param);
+        if($sub_param)
+        {
+            $laravel_user_type = new laravelUsers;
+            $laravel_user_type -> sid = $sub_param -> id;
+            $laravel_user_type -> user_type = $request -> role ?: 0;
+
+            $laravel_user_type -> save();
+        }
 
         return response()->json(['message' => 'Registration successful']);
 

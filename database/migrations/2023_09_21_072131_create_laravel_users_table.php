@@ -14,9 +14,15 @@ return new class extends Migration
         Schema::create('laravel_users', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->name('string')->nullable();
-            $table->user_type('string')->nullable();
-            $table->user_key();
+            $table->integer('sid')->nullable();
+            $table->integer('user_type')->nullable();
+            $table->string('userdesc')->nullable();
+            $table->string('fname')->nullable();
+            $table->string('mname')->nullable();
+            $table->string('lname')->nullable();
+            $table->string('address')->nullable();
+            $table->integer('pno')->nullable();
+            $table->string('gender')->nullable();
         });
     }
 

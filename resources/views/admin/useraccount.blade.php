@@ -9,7 +9,7 @@
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <form id=registrationFormV2>
                     @csrf
-                    <div class="grid lg:grid-cols-3 gap-3 grid-cols-1 lg:mb-5">
+                    <div class="grid lg:grid-cols-4 gap-4 grid-cols-1 lg:mb-5">
                         <div>
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
                             <input type="email" name="emailV2" id="emailV2" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="name@company.com" required="">
@@ -21,6 +21,16 @@
                         <div>
                             <label for="confirm-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
                             <input type="password" name="confirm-password" id="confirm-passwordV2" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                        </div>
+                        <div>
+                            <label for="confirm-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">User Role</label>
+                            {{-- <input type="password" name="confirm-password" id="confirm-passwordV2" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required=""> --}}
+                            <select id="role" name="role" class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option selected>Choose role</option>
+                                <option value="0">Superadmin</option>
+                                <option value="1">Admin</option>
+                                <option value="2">User</option>
+                            </select>
                         </div>
                         
                     </div>
@@ -44,7 +54,7 @@
         {{-- <div class="grid grid-cols-1 mt-3">
              --}}
             <div class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 mt-3">
-
+            
                 <table id="dynamic_Datable" class="mt-5 text-black bg-white nowrap display datatable" cellspacing="0" style="width:100%">
                     <thead>
                         <tr>
@@ -81,7 +91,23 @@
                 const passwordV2 = $('#confirm-passwordV2').val();
                 if(passwordV2 !== password)
                 {
-                    alert('errror');
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        background: '#f64341',
+                        color: '#ffff',
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.resumeTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                        })
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'Password does not match',
+                    })
                     return;
 
                 }
@@ -116,7 +142,7 @@
 
 
                     },
-                    
+                
                     error: function(error){
                         if (error.status === 422) {
                             // Handle validation errors, e.g., display them to the user
@@ -158,11 +184,11 @@
                             })
                             Toast.fire({
                                 icon: 'error',
-                                title: 'djsiajdioasjiod',
+                                title: 'Email is already taken'
                             })
-                        }
-                        
-    
+
+                            return;
+                        }   
                     }
                 });
            }); 
