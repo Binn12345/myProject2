@@ -1,3 +1,61 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+.dataTable thead tr th {
+    @apply text-center text-white bg-black;
+}
+
+.dataTable tbody tr td {
+    @apply text-center;
+}
+
+#dynamic_Datable_filter_wrapper {
+    @apply p-10 text-black bg-white rounded-lg;
+}
+
+
+#dynamic_Datable_filter label input {
+    @apply py-0.5 mb-5 text-sm text-black bg-gray-100 border border-gray-300 rounded-lg;
+}
+
+#dynamic_Datable_length option {
+    @apply text-sm;
+}
+
+#dynamic_Datable_length select {
+    @apply py-0.5;
+}
+
+#dynamic_Datable_length {
+    @apply text-sm;
+}
+
+#dynamic_Datable_filter_wrapper {
+    @apply p-10 text-black bg-white rounded-lg;
+}
+
+
+.editBtn {
+    --tw-bg-opacity: 1;
+    background-color: rgb(30 66 159 / var(--tw-bg-opacity));
+}
+
+.editBtn:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgb(251 191 36 / var(--tw-bg-opacity));
+    transition-duration: 300ms;
+}
+
+.deleteBtn {
+    --tw-bg-opacity: 1;
+    background-color: rgb(200 30 30 / var(--tw-bg-opacity));
+}
+
+.deleteBtn:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgb(251 191 36 / var(--tw-bg-opacity));
+    transition-duration: 300ms;
+}

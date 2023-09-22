@@ -39,4 +39,12 @@ class registerController extends Controller
 
     }
 
+    public function store(Request $request)
+    {
+        $users = User::get();
+
+        return response()->json($users);
+
+    }
+
 }

@@ -32,6 +32,8 @@ Route::middleware(['adminSessions'])->group(function () {
     
     Route::get('a/profile', [ContentController::class, 'profileIndex'])->name('profile');
     Route::get('a/accounts', [ContentController::class, 'accountsIndex'])->name('accounts');
+    Route::post('a/storedata', [ContentController::class, 'storedata'])->name('storedata');
+    Route::get('a/storeinfo', [registerController::class, 'store'])->name('storeinfos');
 });
 
 
