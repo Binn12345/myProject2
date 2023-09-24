@@ -48,20 +48,26 @@
                     </div> --}}
                     
                     <button type="button" class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-black hover:bg-gray-600 hover:duration-300 hover:text-white" id="addUser">Create</button>
-                </form>
+                
             </div>
         </div>
-        {{-- <div class="grid grid-cols-1 mt-3">
-             --}}
-            <div class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 mt-3">
-            
+       
+                    <div class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 mt-3">
+                    <label for="" class="block mb-2 text-sm font-medium text-gray-900">Role</label>
+                    <select id="roleSelector" name="roleSelector" class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="" selected> - All role - </option>
+                        <option value="0"> - Superadmin - </option>
+                        <option value="1"> - Admin - </option>
+                        <option value="2"> - User - </option>
+                    </select>
+                </form>
                 <table id="dynamic_Datable" class="mt-5 text-black bg-white nowrap display datatable" cellspacing="0" style="width:100%">
                     <thead>
                         <tr>
                             <th>id</th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Password</th>
+                            <th>Role</th>
                             <th></th>
                             {{-- <th></th>
                             <th></th> --}}
@@ -83,7 +89,8 @@
 
 <script type="text/javascript">
          
-         $(document).ready(function(){
+        $(document).ready(function(){
+
             $('#addUser').on('click',function(e){
                 e.preventDefault();
 
@@ -137,7 +144,11 @@
                             icon: 'success',
                             title: response['message']
                         })
-                        
+                        $('#emailV2').val('');
+                        $('#passwordV2').val('');
+                        $('#confirm-passwordV2').val('');
+                        // $("#role").attr("selected", true);
+                        // $("#role").val('').selectpicker('refresh');
                         table.ajax.reload();
 
 
@@ -191,14 +202,21 @@
                         }   
                     }
                 });
-           }); 
+            }); 
 
-           const table = new DataTable('#dynamic_Datable', {
+            $('#roleSelector').on('change',function(e){
+                table.ajax.reload();
+            });
+
+            const table = new DataTable('#dynamic_Datable', {
                 scrollX : true,
-                
                 ajax: {
                     url: "{{ route('storeinfos') }}",
                     dataSrc: "",
+                    data : function (d) {
+                        // Send additional data if needed
+                        d.roleSelector = $('#roleSelector').val(); // Get the roleSelector value from an input field
+                    }
                 },
                 "columns": [
                     {
@@ -211,7 +229,7 @@
                     },
                     { "data": "name" },
                     { "data": "email" },
-                    { "data": "password" },
+                    { "data": "userdesc" },
                     {
                         data: null,
                         render: function (data, type, row) {
@@ -220,9 +238,9 @@
                                 '<button class="editBtn text-white rounded-md p-2" id="editBtn">'+
 
                                 '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">'+
-  '<path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />'+
-  '<path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />'+
-'</svg>'+
+                                '<path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />'+
+                                '<path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />'+
+                                '</svg>'+
                                 "</button > " +
                                 '<button class="deleteBtn text-white rounded-md p-2 ml-2" id="deleteBtn" data-id="' +
                                 row.id +
@@ -237,11 +255,86 @@
                 ]
             });
 
-            
+            // Add a click event handler for the delete buttons using event delegation
+            $('#dynamic_Datable').on('click', '.deleteBtn', function () {
+                const rowId = $(this).data('id');
+                // Confirm with the user before deleting
+                Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                        url: "{{ route('deleteRow') }}", // Replace with your delete route
+                        method: 'POST', // Change HTTP method if needed
+                        data: {
+                            id: rowId, // Send the row ID to be deleted
+                            _token: "{{ csrf_token() }}" // Include CSRF token for Laravel
+                        },
+                        success: function (response) {
+                            // Handle success response, e.g., remove the row from the DataTable
+                            if (response.success) {
+
+                                const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 4000,
+                                background: '#59b259',
+                                color: '#ffff',
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.resumeTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                }
+                                })
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: response['message']
+                                })
+                                table.ajax.reload(); // Reload the DataTable
+                            } else {
+                                alert('Failed to delete the row.');
+                            }
+                        },
+                        error: function (error) {
+                            console.error(error.responseJSON.message);
+                            const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 4000,
+                            background: '#f64341',
+                            color: '#ffff',
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.resumeTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                            })
+                            Toast.fire({
+                                icon: 'error',
+                                title: error.responseJSON.message
+                            })
+
+                            return;
+                        }
+                    });
+                    }
+                })
 
 
+
+            });
+
+          
            
-    });
+        });
         
 
 

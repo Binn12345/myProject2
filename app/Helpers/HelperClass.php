@@ -13,11 +13,11 @@ class HelperClass
         if (!session()->has('adminEmail')){
             return to_route('login.index');
         }
-        
-        // dump(session('adminEmail'));
+
+
         
         $adminEmail = [ 
-            'adminEmail' => $user->select('id')->where('email', session('adminEmail'))->first()
+            'adminEmail' => $user->where('email', session('adminEmail'))->first()
         ];
       
         
@@ -29,12 +29,16 @@ class HelperClass
         }
         
         return $adminEmail;
-    }   
-
-    public static function sessionjoin($id)
+    } 
+    
+    public static function sessionjoin($ar)
     {
-        foreach ( $id as $item):
+        foreach ($ar as $id): $id = $id->id; endforeach;
 
-        endforeach;
+        $adminEmail = User::join('laravel_users','laravel_users.sid','users.id')->where('laravel_users.sid',$id)->first();
+      
+        return $adminEmail;
+
     }
+
 }

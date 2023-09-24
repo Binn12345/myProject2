@@ -13,7 +13,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $guarded = ['id'];
-    
+    // protected $table=
    
     protected $casts = [
         'password' => 'hashed',

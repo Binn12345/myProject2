@@ -1,3 +1,9 @@
+
+{{-- @php
+  
+  dump(get_defined_vars(),$adminEmail['email']);
+@endphp --}}
+
 <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
       <div class="flex items-center justify-between">
@@ -9,7 +15,6 @@
               </svg>
            </button>
           <a href="{{route('login.index')}}" class="flex ml-2 md:mr-24">
-            {{-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="FlowBite Logo" /> --}}
             <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">DMS</span>
           </a>
         </div>
@@ -24,10 +29,10 @@
               <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700" id="dropdown-user">
                 <div class="px-4 py-3" role="none">
                   <p class="text-sm text-gray-900 dark:text-white" role="none">
-                   {{$adminEmail['name'] ?? ''}}
+                   {{$name ?? $adminEmail['name']}}
                   </p>
                   <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                   {{$adminEmail['email'] ?? ''}}
+                   {{$email ?? $adminEmail['email']}}
                   </p>
                 </div>
                 <ul class="py-1" role="none">

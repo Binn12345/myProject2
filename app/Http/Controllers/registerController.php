@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\laravelUsers;
 use Faker\Factory as Faker;
 
 class registerController extends Controller
@@ -15,6 +16,7 @@ class registerController extends Controller
 
     public function registrationinfo(Request $request)
     {
+        // dump($request->all());
         // Create an instance of Faker
         $faker = Faker::create();
 
@@ -41,10 +43,30 @@ class registerController extends Controller
 
     public function store(Request $request)
     {
-        $users = User::get();
+        if($request->roleSelector != null):
+            $users = User::join('laravel_users as lu','users.id','lu.sid')->where('lu.user_type',$request->roleSelector)->get(); 
+        else:
+            $users = User::join('laravel_users','laravel_users.sid','users.id')->get(); 
+        endif;
+       
 
         return response()->json($users);
 
+    }
+
+    public function deleteData(Request $request)
+    {
+        // dump($request->all());
+        // Find the record by its ID
+        $record = User::join('laravel_users as lu','users.id','lu.sid')->find($request->id);
+        // Check if the record exists
+        if (!$record) {
+            return response()->json(['success' => false, 'message' => 'Record not found'], 404);
+        }
+        // Delete the record
+        $record->delete();
+
+        return response()->json(['success' => true, 'message' => 'Record deleted successfully']);
     }
 
 }

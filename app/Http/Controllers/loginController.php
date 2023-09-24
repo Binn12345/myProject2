@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\laravelUsers;
 use Illuminate\Http\RedirectResponse;
+use App\Classes\sessionClass;
+
 
 class loginController extends Controller
 {
@@ -53,15 +55,14 @@ class loginController extends Controller
     {
        
         $adminEmail = HelperClass::sessionSuperadmin($user);
-       
-      
+        $adminEmail = HelperClass::sessionjoin($adminEmail);
         
-        // $adminEmail = HelperClass::sessionjoin($ar);
         
         if($adminEmail instanceof RedirectResponse){
+            
             return $adminEmail; 
         } 
-        // dump($adminEmail);
+     
         $response = response()
             ->view('admin.index', $adminEmail)
             ->header('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate')

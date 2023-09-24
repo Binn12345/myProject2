@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\HelperClass;
+use App\Classes\sessionClass;
 use App\Http\Requests\AccountRequest;
 use App\Http\Controllers\loginValidator;
 use Illuminate\Http\Request;
@@ -18,6 +19,7 @@ class ContentController extends Controller
     public function profileIndex(User $user){
     
         $adminEmail = HelperClass::sessionSuperadmin($user);
+        $adminEmail = HelperClass::sessionjoin($adminEmail);
 
         if($adminEmail instanceof RedirectResponse){
             return $adminEmail; 
@@ -31,10 +33,13 @@ class ContentController extends Controller
             
         return $response;
     }
+
+
     
     public function accountsIndex(User $user){
     
         $adminEmail = HelperClass::sessionSuperadmin($user);
+        $adminEmail = HelperClass::sessionjoin($adminEmail);
 
         if($adminEmail instanceof RedirectResponse){
             return $adminEmail; 
@@ -80,12 +85,15 @@ class ContentController extends Controller
         // dump($sub_param);
         if($sub_param)
         {
+            $role = sessionClass::roleDesc($request->role);
             $laravel_user_type = new laravelUsers;
             $laravel_user_type -> sid = $sub_param -> id;
             $laravel_user_type -> user_type = $request -> role ?: 0;
-
+            $laravel_user_type -> userdesc = $role ?: "";
             $laravel_user_type -> save();
         }
+
+        if(!$request->roleSector) : $collect = laravelUsers::where('user_type',$request->roleSelector)->get(); endif;
 
         return response()->json(['message' => 'Registration successful']);
 

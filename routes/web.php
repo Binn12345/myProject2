@@ -30,10 +30,13 @@ Route::middleware(['adminSessions'])->group(function () {
     Route::get('a/', [loginController::class, 'index'])->name('adminindex');
     Route::get('a/logout', [loginController::class, 'logout'])->name('logout');
     
-    Route::get('a/profile', [ContentController::class, 'profileIndex'])->name('profile');
-    Route::get('a/accounts', [ContentController::class, 'accountsIndex'])->name('accounts');
-    Route::post('a/storedata', [ContentController::class, 'storedata'])->name('storedata');
-    Route::get('a/storeinfo', [registerController::class, 'store'])->name('storeinfos');
+    Route::get('a/profile',     [ContentController::class, 'profileIndex']) ->name('profile');
+    Route::get('a/accounts',    [ContentController::class, 'accountsIndex'])->name('accounts');
+    Route::post('a/storedata',  [ContentController::class, 'storedata'])    ->name('storedata');
+    Route::get('a/storeinfo',   [registerController::class, 'store'])       ->name('storeinfos');
+
+    Route::post('a/role',        [registerController::class, 'searchData'])  ->name('role');
+    Route::post('a/deleteRow',   [registerController::class, 'deleteData'])  ->name('deleteRow');
 });
 
 
