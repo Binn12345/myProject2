@@ -25,18 +25,18 @@ Route::post('/storeinfo',  [registerController::class, 'registrationinfo'])->nam
 
 Route::post('/check', [loginController::class, 'login'])->name('/check');
 
-Route::middleware(['adminSessions'])->group(function () {
+Route::middleware(['adminSessions'])->prefix('admin')->group(function () {
 
-    Route::get('a/', [loginController::class, 'index'])->name('adminindex');
-    Route::get('a/logout', [loginController::class, 'logout'])->name('logout');
+    Route::get('/', [loginController::class, 'index'])->name('adminindex');
+    Route::get('/logout', [loginController::class, 'logout'])->name('logout');
     
-    Route::get('a/profile',     [ContentController::class, 'profileIndex']) ->name('profile');
-    Route::get('a/accounts',    [ContentController::class, 'accountsIndex'])->name('accounts');
-    Route::post('a/storedata',  [ContentController::class, 'storedata'])    ->name('storedata');
-    Route::get('a/storeinfo',   [registerController::class, 'store'])       ->name('storeinfos');
+    Route::get('/profile',     [ContentController::class, 'profileIndex']) ->name('profile');
+    Route::get('/accounts',    [ContentController::class, 'accountsIndex'])->name('accounts');
+    Route::post('/storedata',  [ContentController::class, 'storedata'])    ->name('storedata');
+    Route::get('/storeinfo',   [registerController::class, 'store'])       ->name('storeinfos');
 
-    Route::post('a/role',        [registerController::class, 'searchData'])  ->name('role');
-    Route::post('a/deleteRow',   [registerController::class, 'deleteData'])  ->name('deleteRow');
+    Route::post('/role',        [registerController::class, 'searchData'])  ->name('role');
+    Route::post('/deleteRow',   [registerController::class, 'deleteData'])  ->name('deleteRow');
 });
 
 
