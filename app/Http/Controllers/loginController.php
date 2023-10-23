@@ -16,6 +16,7 @@ class loginController extends Controller
 {
     public function loginPage()
     {
+        
         if (session()->has('adminEmail')){
             return to_route('adminindex');
         }
@@ -32,7 +33,7 @@ class loginController extends Controller
     public function login(Request $request, User $user, loginValidator $loginvalidator)
     {
         $valid =  $loginvalidator->loginValidation($request);
-
+    
         if($valid->fails()){
             return response()->json(['error' => $valid->errors()->all()],400);
         }
@@ -40,7 +41,7 @@ class loginController extends Controller
         $validated = $valid->validated();
 
         $users = $user->where('email', $validated['email'])->first();
-
+        
         if (!$users) return response()->json(['error' => 'Email does not exist.'],400);
 
         if (!Hash::check($validated['password'], $users->password)){
@@ -55,9 +56,12 @@ class loginController extends Controller
     {
        
         $adminEmail = HelperClass::sessionSuperadmin($user);
+       
         $adminEmail = HelperClass::sessionjoin($adminEmail);
+
         
         
+       
         if($adminEmail instanceof RedirectResponse){
             
             return $adminEmail; 
@@ -78,5 +82,7 @@ class loginController extends Controller
     
         return to_route('login.index');
     }
+
+    // 
 
 }

@@ -11,7 +11,8 @@ class sessionClass
         $adminEmail = HelperClass::sessionjoin($adminEmail);
 
         if($adminEmail instanceof RedirectResponse){
-            
+
+            dd($adminEmail);
             return $adminEmail; 
         } 
      

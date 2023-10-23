@@ -15,10 +15,12 @@ class Adminmiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+
         if(!session()->has('adminEmail') && ($request->path() != '/')){
             abort(404);
         }
 
+        // dd($next($request));
         return $next($request);
     }
 }
